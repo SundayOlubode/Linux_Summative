@@ -16,7 +16,7 @@ typedef struct
         pthread_cond_t can_consume;
 } BottleQueue;
 
-// Global queue
+/* Queue */
 BottleQueue queue = {
     .bottles = 0,
     .mutex = PTHREAD_MUTEX_INITIALIZER,
