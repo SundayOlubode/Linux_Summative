@@ -1,4 +1,4 @@
 samuel:samuel
-favour:favour
-pius:pius
-ade:ade
+david:david
+magot:magot
+joshua:joshua

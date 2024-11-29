@@ -19,12 +19,10 @@ void log_entry(const char *entry)
                 return;
         }
 
-        // Get current timestamp
         time_t now = time(NULL);
         char timestamp[26];
         strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", localtime(&now));
 
-        // Write entry with timestamp
         fprintf(log_file, "[%s] %s\n", timestamp, entry);
         fclose(log_file);
 }
@@ -37,15 +35,13 @@ int main()
         int addrlen = sizeof(address);
         char buffer[BUFFER_SIZE] = {0};
 
-        // Create socket
         if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
         {
                 perror("Socket creation failed");
                 exit(EXIT_FAILURE);
         }
 
-        // Set socket options
-        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt)))
+        if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)))
         {
                 perror("setsockopt failed");
                 exit(EXIT_FAILURE);
@@ -55,14 +51,12 @@ int main()
         address.sin_addr.s_addr = INADDR_ANY;
         address.sin_port = htons(PORT);
 
-        // Bind socket
         if (bind(server_fd, (struct sockaddr *)&address, sizeof(address)) < 0)
         {
                 perror("Bind failed");
                 exit(EXIT_FAILURE);
         }
 
-        // Listen for connections
         if (listen(server_fd, 3) < 0)
         {
                 perror("Listen failed");

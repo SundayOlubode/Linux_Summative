@@ -1,5 +1,5 @@
-gcc -o ip_logger_server server.c
-gcc -o ip_scanner_client client.c
+gcc -o ip_server server.c
+gcc -o ip_client client.c
 
-./ip_logger_server
-./ip_scanner_client
+./ip_server
+# ./ip_client

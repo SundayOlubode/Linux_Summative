@@ -9,7 +9,7 @@
 #include <dirent.h>
 #include <ctype.h>
 
-// Structure to store CPU statistics
+// CPU statistics struct
 typedef struct
 {
         long user;
@@ -23,7 +23,7 @@ typedef struct
         long guest;
 } CPUStats;
 
-// Function to read CPU statistics
+// Read CPU statistics
 void read_cpu_stats(CPUStats *stats)
 {
         FILE *fp = fopen("/proc/stat", "r");

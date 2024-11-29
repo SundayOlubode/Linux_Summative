@@ -4,4 +4,4 @@ gcc -o chat_client chat_client.c -pthread;
 
 echo -e "\nRunning chat_server and chat_client...\n"
 ./chat_server
-./chat_client
+# ./chat_client

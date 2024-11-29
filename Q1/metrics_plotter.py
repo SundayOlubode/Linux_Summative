@@ -5,10 +5,8 @@ from metricsreader import read_metrics
 from datetime import datetime
 
 def plot_metrics(filename):
-    # Read metrics using our C extension
     timestamps, cpu_usage, memory_usage, network_received, network_transmitted = read_metrics(filename)
 
-    # Create figure and axis
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
     
     # Plot CPU and Memory usage
@@ -29,18 +27,15 @@ def plot_metrics(filename):
     ax2.grid(True)
     ax2.legend()
     
-    # Rotate x-axis labels for better readability
+    # readability
     plt.setp(ax1.xaxis.get_majorticklabels(), rotation=45)
     plt.setp(ax2.xaxis.get_majorticklabels(), rotation=45)
     
-    # Adjust layout to prevent label overlap
     plt.tight_layout()
     
-    # Generate timestamp for unique filename
     current_time = datetime.now().strftime('%Y%m%d_%H%M%S')
     output_filename = f'system_metrics_{current_time}.png'
     
-    # Save the plot as PNG
     plt.savefig(output_filename, dpi=300, bbox_inches='tight')
     print(f"Plot saved as: {output_filename}")
 

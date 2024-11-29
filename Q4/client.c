@@ -16,7 +16,6 @@
 #define BUFFER_SIZE 1024
 #define ARP_CACHE "/proc/net/arp"
 
-// Function to get local IP address
 char *get_local_ip(char *interface_name)
 {
         int fd;
@@ -38,7 +37,6 @@ char *get_local_ip(char *interface_name)
         return ip;
 }
 
-// Function to get hostname from IP
 char *get_hostname(const char *ip)
 {
         struct sockaddr_in sa;
@@ -58,7 +56,6 @@ char *get_hostname(const char *ip)
         return hostname;
 }
 
-// Function to scan network using ARP cache
 void scan_network(int server_socket)
 {
         FILE *arp_file = fopen(ARP_CACHE, "r");
@@ -71,7 +68,6 @@ void scan_network(int server_socket)
         char line[BUFFER_SIZE];
         char ip[16], hw_type[8], flags[8], hw_addr[18], mask[8], device[8];
 
-        // Skip header line
         fgets(line, sizeof(line), arp_file);
 
         // Read each entry
@@ -79,7 +75,6 @@ void scan_network(int server_socket)
         {
                 sscanf(line, "%s %s %s %s %s %s", ip, hw_type, flags, hw_addr, mask, device);
 
-                // Only process valid entries (with hardware address)
                 if (strcmp(hw_addr, "00:00:00:00:00:00") != 0)
                 {
                         char *hostname = get_hostname(ip);
@@ -135,7 +130,6 @@ int main()
 
         printf("Connected to server. Starting network scan...\n");
 
-        // Get local interface information
         struct ifaddrs *ifaddr, *ifa;
         if (getifaddrs(&ifaddr) == -1)
         {
@@ -143,7 +137,6 @@ int main()
                 return -1;
         }
 
-        // Send local machine's information first
         for (ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next)
         {
                 if (ifa->ifa_addr == NULL || ifa->ifa_addr->sa_family != AF_INET)
@@ -165,7 +158,6 @@ int main()
 
         freeifaddrs(ifaddr);
 
-        // Scan network for other devices
         scan_network(sock);
 
         close(sock);
